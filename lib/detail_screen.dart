@@ -101,14 +101,11 @@ class DetailMobilePage extends StatelessWidget {
                       Text(place.ticketPrice, style: informationTextStyle),
                     ],
                   ),
-
-                  // player
                   GestureDetector(
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
-                        isScrollControlled:
-                            true, // Biar bisa tampil tinggi & scroll
+                        isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(16),
@@ -117,11 +114,9 @@ class DetailMobilePage extends StatelessWidget {
                         builder: (context) {
                           return DraggableScrollableSheet(
                             expand: false,
-                            initialChildSize:
-                                0.6, // BottomSheet tinggi awal 60%
+                            initialChildSize: 0.6,
                             minChildSize: 0.4,
-                            maxChildSize:
-                                0.95, // Bisa ditarik sampai hampir full screen
+                            maxChildSize: 0.95,
                             builder: (context, scrollController) {
                               return Container(
                                 padding: const EdgeInsets.all(16),
@@ -136,8 +131,6 @@ class DetailMobilePage extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 12),
-
-                                    // Loop daftar pemain
                                     ...place.players.map(
                                       (pemain) => Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -277,69 +270,134 @@ class _DetailWebPageState extends State<DetailWebPage> {
                       child: Card(
                         child: Container(
                           padding: const EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Text(
-                                widget.place.name,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 30.0,
-                                  fontFamily: 'Staatliches',
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: <Widget>[
-                                      const Icon(Icons.calendar_today),
-                                      const SizedBox(width: 8.0),
-                                      Text(
-                                        widget.place.openDays,
-                                        style: informationTextStyle,
-                                      ),
-                                    ],
-                                  ),
-                                  const FavoriteButton(),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  const Icon(Icons.access_time),
-                                  const SizedBox(width: 8.0),
-                                  Text(
-                                    widget.place.openTime,
-                                    style: informationTextStyle,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
-                              Row(
-                                children: <Widget>[
-                                  const Icon(Icons.monetization_on),
-                                  const SizedBox(width: 8.0),
-                                  Text(
-                                    widget.place.ticketPrice,
-                                    style: informationTextStyle,
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16.0,
-                                ),
-                                child: Text(
-                                  widget.place.description,
-                                  textAlign: TextAlign.justify,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  widget.place.name,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: 'Oxygen',
+                                    fontSize: 30.0,
+                                    fontFamily: 'Staatliches',
                                   ),
                                 ),
-                              ),
-                            ],
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: <Widget>[
+                                        const Icon(Icons.calendar_today),
+                                        const SizedBox(width: 8.0),
+                                        Text(
+                                          widget.place.openDays,
+                                          style: informationTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                    const FavoriteButton(),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Icon(Icons.access_time),
+                                    const SizedBox(width: 8.0),
+                                    Text(
+                                      widget.place.openTime,
+                                      style: informationTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8.0),
+                                Row(
+                                  children: <Widget>[
+                                    const Icon(Icons.monetization_on),
+                                    const SizedBox(width: 8.0),
+                                    Text(
+                                      widget.place.ticketPrice,
+                                      style: informationTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Icon(Icons.person_2),
+                                    const SizedBox(width: 8.0),
+                                    Text(
+                                      widget.place.player,
+                                      style: informationTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Container(
+                                            width: 400,
+                                            padding: const EdgeInsets.all(16),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Daftar Pemain ${widget.place.name}",
+                                                  style: const TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 12),
+                                                ...widget.place.players.map(
+                                                  (pemain) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          vertical: 6,
+                                                        ),
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.person,
+                                                          size: 20,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(pemain),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: const Icon(Icons.list),
+                                  label: const Text("Lihat Daftar Pemain"),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16.0,
+                                  ),
+                                  child: Text(
+                                    widget.place.description,
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: 'Oxygen',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
